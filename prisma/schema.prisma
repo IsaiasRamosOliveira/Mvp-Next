@@ -11,11 +11,24 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
+  id        String    @id @default(uuid())
+  email     String    @unique
   name      String
   password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Message   Message[]
+
   @@map("users")
+}
+
+model Message {
+  id      String @id @default(uuid())
+  id_user String
+  user    User   @relation(fields: [id_user], references: [id])
+  to      String
+  from    String
+  body    String
+
+  @@map("messages")
 }
